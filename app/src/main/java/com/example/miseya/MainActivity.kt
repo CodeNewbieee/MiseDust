@@ -28,11 +28,12 @@ class MainActivity : AppCompatActivity() {
              Log.d("miseya", "selectedItem: spinnerViewGoo selected >  $text")
              var selectedItem = items.filter { f -> f.stationName == text }
              Log.d("miseya", "selectedItem: sidoName > " + selectedItem[0].sidoName)
+             Log.d("miseya", "selectedItem: stationName > " + selectedItem[0].stationName)
              Log.d("miseya", "selectedItem: pm10Value > " + selectedItem[0].pm10Value)
 
              tvCityname.text = selectedItem[0].sidoName + " " + selectedItem[0].stationName
-             tvDate.setText(selectedItem[0].dataTime)
-             tvP10value.setText(selectedItem[0].pm10Value + " ㎍/㎥")
+             tvDate.text = selectedItem[0].dataTime
+             tvP10value.text = selectedItem[0].pm10Value + " ㎍/㎥"
 
              when(getGrade(selectedItem[0].pm10Value)) {
                  1 -> {
@@ -61,20 +62,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     // 코루틴
-    private fun communicateNetWork(param: HashMap<String,String>) = lifecycleScope.launch() {
+    private fun communicateNetWork(param: HashMap<String,String>)= lifecycleScope.launch() {
         val responseData = NetWorkClient.dustNetWork.getDust(param)
         Log.d("Parsing Dust ::", responseData.toString())
 
         val adapter = IconSpinnerAdapter(binding.spinnerViewGoo)
         items = responseData.response.dustBody.dustItem!!
 
-        // 선택된 지역안의 구 이름을 받기
         val goo = ArrayList<String>()
         items.forEach {
             Log.d("add Item :", it.stationName)
             goo.add(it.stationName)
         }
-        runOnUiThread{
+
+        runOnUiThread {
             binding.spinnerViewGoo.setItems(goo)
         }
 

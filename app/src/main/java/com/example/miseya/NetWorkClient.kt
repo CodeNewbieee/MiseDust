@@ -9,7 +9,7 @@ import com.example.miseya.BuildConfig
 
 object NetWorkClient {
 
-    private const val DUST_BASE_URL = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc"
+    private const val DUST_BASE_URL = "https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/"
 
 
     private fun createOkHttpClient(): OkHttpClient {
